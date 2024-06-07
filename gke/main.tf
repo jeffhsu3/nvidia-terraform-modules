@@ -78,6 +78,7 @@ resource "google_container_node_pool" "cpu_nodes" {
       "https://www.googleapis.com/auth/compute"
     ]
 
+    service_account = var.service_account
     preemptible  = var.use_cpu_spot_instances
     machine_type = var.cpu_instance_type
     disk_size_gb = var.disk_size_gb
@@ -128,6 +129,7 @@ resource "google_container_node_pool" "gpu_nodes" {
       count = var.gpu_count
     }
 
+    service_account = var.service_account
     preemptible  = var.use_gpu_spot_instances
     machine_type = var.gpu_instance_type
     disk_size_gb = var.disk_size_gb

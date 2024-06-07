@@ -82,6 +82,12 @@ variable "num_cpu_nodes" {
   description = "Number of CPU nodes when pool is created"
 }
 
+variable "service_account" {
+  type        = string
+  default     = ""
+  description = "Service Account to use for the GKE nodes"
+}
+
 /***************************
 GKE GPU  Node Pool Variables
 ***************************/
