@@ -75,9 +75,11 @@ resource "google_container_node_pool" "cpu_nodes" {
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
       "https://www.googleapis.com/auth/devstorage.read_only",
-      "https://www.googleapis.com/auth/compute"
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/devstorage.full_control",
     ]
 
+    service_account = var.service_account
     preemptible  = var.use_cpu_spot_instances
     machine_type = var.cpu_instance_type
     disk_size_gb = var.disk_size_gb
@@ -121,13 +123,15 @@ resource "google_container_node_pool" "gpu_nodes" {
       "https://www.googleapis.com/auth/logging.write",
       "https://www.googleapis.com/auth/monitoring",
       "https://www.googleapis.com/auth/devstorage.read_only",
-      "https://www.googleapis.com/auth/compute"
+      "https://www.googleapis.com/auth/compute",
+      "https://www.googleapis.com/auth/devstorage.full_control",
     ]
     guest_accelerator {
       type  = var.gpu_type
       count = var.gpu_count
     }
 
+    service_account = var.service_account
     preemptible  = var.use_gpu_spot_instances
     machine_type = var.gpu_instance_type
     disk_size_gb = var.disk_size_gb
