@@ -80,10 +80,10 @@ resource "google_container_node_pool" "cpu_nodes" {
     ]
 
     service_account = var.service_account
-    preemptible  = var.use_cpu_spot_instances
-    machine_type = var.cpu_instance_type
-    disk_size_gb = var.disk_size_gb
-    tags         = concat(["tf-managed", "${var.cluster_name}"], var.gpu_instance_tags)
+    preemptible     = var.use_cpu_spot_instances
+    machine_type    = var.cpu_instance_type
+    disk_size_gb    = var.disk_size_gb
+    tags            = concat(["tf-managed", "${var.cluster_name}"], var.gpu_instance_tags)
     metadata = {
       disable-legacy-endpoints = "true"
     }
@@ -100,6 +100,7 @@ resource "google_container_node_pool" "cpu_nodes" {
   timeouts {
     create = "30m"
     update = "20m"
+    delete = "30m"
   }
 }
 
@@ -132,10 +133,10 @@ resource "google_container_node_pool" "gpu_nodes" {
     }
 
     service_account = var.service_account
-    preemptible  = var.use_gpu_spot_instances
-    machine_type = var.gpu_instance_type
-    disk_size_gb = var.disk_size_gb
-    tags         = concat(["tf-managed", "${var.cluster_name}"], var.gpu_instance_tags)
+    preemptible     = var.use_gpu_spot_instances
+    machine_type    = var.gpu_instance_type
+    disk_size_gb    = var.disk_size_gb
+    tags            = concat(["tf-managed", "${var.cluster_name}"], var.gpu_instance_tags)
     metadata = {
       disable-legacy-endpoints = "true"
     }
@@ -152,13 +153,14 @@ resource "google_container_node_pool" "gpu_nodes" {
   timeouts {
     create = "30m"
     update = "20m"
+    delete = "30m"
   }
 }
 
 /***************************
 Create GPU Operator Namespace
 ***************************/
-resource "kubernetes_namespace_v1" "gpu-operator" {
+resource "" "gpu-operator" {
   metadata {
     annotations = {
       name = "gpu-operator"
@@ -214,6 +216,5 @@ resource "helm_release" "gpu-operator" {
     name  = "driver.version"
     value = var.nvaie ? var.nvaie_gpu_operator_driver_version : var.gpu_operator_driver_version
   }
-
 }
 
